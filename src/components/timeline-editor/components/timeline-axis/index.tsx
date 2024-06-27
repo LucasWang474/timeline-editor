@@ -4,7 +4,7 @@ import { css, cx } from '@emotion/css';
 import { pixelPerSecond, totalDuration } from '@/components/timeline-editor/const';
 import { transitions } from 'polished';
 import { useSize } from 'ahooks';
-import { useTimelineSeekAndDrag } from '@/components/hooks/useTimelineSeek';
+import { useTimelineSeekAndDrag } from '@/components/timeline-editor/hooks/useTimelineSeek';
 
 type LineItem = {
   time: number;
@@ -68,6 +68,7 @@ function useStyles() {
     return {
       wrap: css({
         cursor: 'pointer',
+        position: 'relative',
       }),
       linesWrap: css({
         position: 'relative',
