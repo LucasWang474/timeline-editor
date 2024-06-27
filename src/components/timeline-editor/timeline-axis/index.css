@@ -1,12 +1,18 @@
 .wrap {
   --textDisabled: #bcc1cc;
   --textSupport: #818999;
+
+  padding: 0 32px;
 }
 
 .linesWrap {
+  width: 100%;
+  min-width: 500px;
+
   display: flex;
   align-items: center;
-  gap: 50px;
+  justify-content: space-between;
+  /*gap: 50px;*/
 
   position: relative;
 
@@ -17,6 +23,18 @@
   height: 4px;
   width: 1px;
   background: var(--textDisabled);
+  position: relative;
+
+  &::after {
+    content: attr(data-time);
+    position: absolute;
+    left: 4px;
+    top: -9px;
+    font-size: 20px;
+    transform: scale(0.5);
+    transform-origin: left center;
+    color: var(--textSupport);
+  }
 }
 
 .line.bold {

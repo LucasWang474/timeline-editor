@@ -33,8 +33,6 @@ export const TimelineAxis: FC<TimelineAxisProps> = (props) => {
     return res;
   }, []);
 
-  console.log('>>> formatSeconds', formatSeconds);
-
   return (
     <div className={classNames('wrap', className)}>
       <div></div>
