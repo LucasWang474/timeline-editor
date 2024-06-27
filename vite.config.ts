@@ -9,4 +9,10 @@ export default defineConfig({
       '@': '/src',
     },
   },
+  build: {
+    // other config...
+    outDir: 'docs',
+    assetsDir: 'assets',
+  },
+  base: './',
 });
