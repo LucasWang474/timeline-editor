@@ -50,7 +50,8 @@ function useStyles() {
         overflow: 'hidden',
         position: 'relative',
 
-        minHeight: '400px',
+        // minHeight: '400px',
+        height: 400,
         padding: `6px 0 0 ${TimelinePaddingLeft}px`,
 
         flex: 1,

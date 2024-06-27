@@ -7,7 +7,7 @@ import { useTimelineTimeContext } from '@/components/context/time';
 const HeadSVGWidth = 10;
 const LineWidth = 2;
 // to make the pointer line center in the svg
-export const LineLeft = Math.trunc((HeadSVGWidth - LineWidth) / 2);
+const LineLeft = Math.trunc((HeadSVGWidth - LineWidth) / 2);
 const LineColor = '#FFA217';
 
 interface TimelinePointerProps {
