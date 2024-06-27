@@ -48,7 +48,7 @@ function useStyles() {
 
         minHeight: '400px',
         margin: '0 48px',
-        padding: `6px ${TimelinePaddingLeft}px 0 24px`,
+        padding: `6px 0 0 ${TimelinePaddingLeft}px`,
 
         flex: 1,
         display: 'flex',

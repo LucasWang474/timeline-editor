@@ -24,7 +24,7 @@ export const TimelineAxis: FC<TimelineAxisProps> = (props) => {
   const size = useSize(refContainer);
   const totalWidth = size?.width ?? 0;
 
-  const { onTimelineClick } = useTimelineSeekAndDrag(refContainer);
+  const { onTimelineClick, moving } = useTimelineSeekAndDrag(refContainer);
 
   const boldStep = 5; // 5s
   const lines: LineItem[] = useMemo(() => {
@@ -43,7 +43,7 @@ export const TimelineAxis: FC<TimelineAxisProps> = (props) => {
   }, [totalWidth]);
 
   return (
-    <div className={cx(cls.wrap, className)} ref={refContainer} onMouseDown={onTimelineClick}>
+    <div ref={refContainer} className={cx(cls.wrap, className)} onMouseDown={onTimelineClick}>
       <div className={cls.linesWrap}>
         {lines.map((line) => {
           return (

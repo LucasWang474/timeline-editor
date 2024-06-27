@@ -1,10 +1,6 @@
 import { RefObject, useState } from 'react';
 import { useMemoizedFn } from 'ahooks';
-import {
-  pixelPerSecond,
-  TimelinePaddingLeft,
-  totalDuration,
-} from '@/components/timeline-editor/const';
+import { pixelPerSecond, totalDuration } from '@/components/timeline-editor/const';
 import { useTimelineTimeContext } from '@/components/context/time';
 
 export function useTimelineSeekAndDrag(refContainer: RefObject<HTMLElement>) {
@@ -13,39 +9,41 @@ export function useTimelineSeekAndDrag(refContainer: RefObject<HTMLElement>) {
   const [moving, setMoving] = useState(false);
 
   const onTimelineClick = useMemoizedFn((e: React.MouseEvent<HTMLDivElement>) => {
-    const dom = e.currentTarget;
-    if (!dom) return;
+    const container = e.currentTarget;
+    if (!container) return;
 
-    const rect = dom.getBoundingClientRect();
-    const x = e.pageX - rect.x - TimelinePaddingLeft;
-    let time = x / pixelPerSecond;
-    time = Math.max(0, Math.min(totalDuration, time));
-    setTime(time);
+    const rect = container.getBoundingClientRect();
+    const actualXToLeftSideOfContainer = e.pageX - rect.x;
+
+    let newTime = actualXToLeftSideOfContainer / pixelPerSecond;
+    newTime = Math.max(0, Math.min(totalDuration, newTime));
+    setTime(newTime);
   });
 
-  const onMove = useMemoizedFn((e: MouseEvent) => {
-    const dom = refContainer.current;
-    if (!dom) return;
+  const onMouseMove = useMemoizedFn((e: MouseEvent) => {
+    const container = refContainer.current;
+    if (!container) return;
 
     setMoving(true);
-    const rect = dom.getBoundingClientRect();
-    const x = e.pageX - rect.x - TimelinePaddingLeft;
-    let time = x / pixelPerSecond;
-    time = Math.max(0, Math.min(totalDuration, time));
-    setTime(time);
+    const rect = container.getBoundingClientRect();
+    const actualXToLeftSideOfContainer = e.pageX - rect.x;
+
+    let newTime = actualXToLeftSideOfContainer / pixelPerSecond;
+    newTime = Math.max(0, Math.min(totalDuration, newTime));
+    setTime(newTime);
   });
-  const onUp = useMemoizedFn(() => {
+  const onMouseUp = useMemoizedFn(() => {
     setMoving(false);
-    document.removeEventListener('mousemove', onMove);
-    document.removeEventListener('mouseup', onUp);
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
   });
 
   const onClick = useMemoizedFn((e: React.MouseEvent<HTMLDivElement>) => {
-    console.log('>>> e', e);
     onTimelineClick(e);
 
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('mouseup', onUp);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   });
 
   return {
