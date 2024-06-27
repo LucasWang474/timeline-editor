@@ -1,13 +1,11 @@
 .wrap {
-  --textDisabled: #bcc1cc;
-  --textSupport: #818999;
-
+  width: 100%;
   padding: 0 32px;
 }
 
 .linesWrap {
   width: 100%;
-  min-width: 500px;
+  min-width: 600px;
 
   display: flex;
   align-items: center;

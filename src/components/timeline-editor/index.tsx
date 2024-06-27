@@ -13,7 +13,9 @@ export const TimelineEditor: FC<TimelineEditorProps> = (props) => {
 
   return (
     <div className={classNames('wrap', className)}>
-      <TimelineAxis />
+      <div className="inner">
+        <TimelineAxis />
+      </div>
     </div>
   );
 };

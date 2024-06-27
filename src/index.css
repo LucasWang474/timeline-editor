@@ -7,6 +7,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --textDisabled: #bcc1cc;
+  --textSupport: #818999;
+  --line: rgba(256, 256, 256, 0.1);
 }
 
 /*https://www.joshwcomeau.com/css/custom-css-reset/*/
