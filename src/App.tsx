@@ -1,7 +1,9 @@
+import { TimelineEditor } from './components/timeline-editor';
+
 function App() {
   return (
     <>
-      <h1>Vite + React</h1>
+      <TimelineEditor />
     </>
   );
 }

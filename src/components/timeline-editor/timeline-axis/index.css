@@ -1,0 +1,26 @@
+.wrap {
+  --textDisabled: #bcc1cc;
+  --textSupport: #818999;
+}
+
+.linesWrap {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+
+  position: relative;
+
+  cursor: pointer;
+}
+
+.line {
+  height: 4px;
+  width: 1px;
+  background: var(--textDisabled);
+}
+
+.line.bold {
+  background: black;
+  height: 12px;
+  background: var(--textSupport);
+}
