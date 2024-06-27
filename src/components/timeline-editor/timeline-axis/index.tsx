@@ -1,9 +1,10 @@
 import { FC, useMemo, useRef } from 'react';
 import { formatSeconds } from '@/utils/time';
 import { css, cx } from '@emotion/css';
-import { PIXEL_PER_SECOND } from '@/components/timeline-editor/const';
+import { pixelPerSecond } from '@/components/timeline-editor/const';
 import { transitions } from 'polished';
 import { useSize } from 'ahooks';
+import { useTimelineSeekAndDrag } from '@/components/hooks/useTimelineSeek';
 
 type LineItem = {
   time: number;
@@ -23,12 +24,14 @@ export const TimelineAxis: FC<TimelineAxisProps> = (props) => {
   const size = useSize(refContainer);
   const totalWidth = size?.width ?? 0;
 
+  const { onTimelineClick } = useTimelineSeekAndDrag(refContainer);
+
   const boldStep = 5; // 5s
   const lines: LineItem[] = useMemo(() => {
     const res: LineItem[] = [];
 
     let curSeconds = 0;
-    while (curSeconds * PIXEL_PER_SECOND <= totalWidth) {
+    while (curSeconds * pixelPerSecond <= totalWidth) {
       res.push({
         time: curSeconds,
         bold: curSeconds % boldStep === 0,
@@ -40,7 +43,7 @@ export const TimelineAxis: FC<TimelineAxisProps> = (props) => {
   }, [totalWidth]);
 
   return (
-    <div className={cx(cls.wrap, className)} ref={refContainer}>
+    <div className={cx(cls.wrap, className)} ref={refContainer} onMouseDown={onTimelineClick}>
       <div className={cls.linesWrap}>
         {lines.map((line) => {
           return (
@@ -48,7 +51,7 @@ export const TimelineAxis: FC<TimelineAxisProps> = (props) => {
               key={line.time}
               className={cx(cls.line, { [cls.bold]: line.bold })}
               data-time={line.bold ? formatSeconds(line.time) : void 0}
-              style={{ transform: `translateX(${line.time * PIXEL_PER_SECOND}px)` }}
+              style={{ transform: `translateX(${line.time * pixelPerSecond}px)` }}
             />
           );
         })}

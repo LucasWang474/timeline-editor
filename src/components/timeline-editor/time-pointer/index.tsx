@@ -1,7 +1,8 @@
 import { FC, useMemo } from 'react';
 import { stopEvent } from '@/utils/event';
 import { css, cx } from '@emotion/css';
-import { PIXEL_PER_SECOND, TimelinePaddingLeft } from '@/components/timeline-editor/const';
+import { pixelPerSecond, TimelinePaddingLeft } from '@/components/timeline-editor/const';
+import { useTimelineTimeContext } from '@/components/context/time';
 
 const HeadSVGWidth = 10;
 const LineWidth = 2;
@@ -18,19 +19,18 @@ export const TimelinePointer: FC<TimelinePointerProps> = (props) => {
 
   const cls = useStyles();
 
-  const time = 0;
+  const { time } = useTimelineTimeContext();
 
+  // For how the pointer is moving, see useTimelineSeek.ts
   return (
     <div
       className={cx(cls.wrap, className)}
       style={{
-        transform: `translateX(${time * PIXEL_PER_SECOND + (TimelinePaddingLeft - LineLeft)}px)`,
+        transform: `translateX(${time * pixelPerSecond + (TimelinePaddingLeft - LineLeft)}px)`,
       }}
     >
       <div onMouseDown={stopEvent} className={cls.svgWrap}>
-        <div
-        // onMouseDown={onMouseDown}
-        >
+        <div>
           <svg
             width="10"
             height="22"

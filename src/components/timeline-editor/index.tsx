@@ -3,6 +3,7 @@ import { TimelineAxis } from './timeline-axis';
 import { TimelinePointer } from '@/components/timeline-editor/time-pointer';
 import { css, cx } from '@emotion/css';
 import { TimelinePaddingLeft } from '@/components/timeline-editor/const';
+import { TimelineTimeContextProvider } from '@/components/context/time';
 
 interface TimelineEditorProps {
   className?: string;
@@ -14,12 +15,14 @@ export const TimelineEditor: FC<TimelineEditorProps> = (props) => {
   const cls = useStyles();
 
   return (
-    <div className={cx(cls.wrap, className)}>
-      <div className={cls.inner}>
-        <TimelineAxis />
-        <TimelinePointer />
+    <TimelineTimeContextProvider>
+      <div className={cx(cls.wrap, className)}>
+        <div className={cls.inner}>
+          <TimelineAxis />
+          <TimelinePointer />
+        </div>
       </div>
-    </div>
+    </TimelineTimeContextProvider>
   );
 };
 
