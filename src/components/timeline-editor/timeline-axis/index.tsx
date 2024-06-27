@@ -1,7 +1,9 @@
-import classNames from 'classnames';
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useRef } from 'react';
 import { formatSeconds } from '@/utils/time';
-import { css } from '@emotion/css';
+import { css, cx } from '@emotion/css';
+import { PIXEL_PER_SECOND } from '@/components/timeline-editor/const';
+import { transitions } from 'polished';
+import { useSize } from 'ahooks';
 
 type LineItem = {
   time: number;
@@ -17,32 +19,36 @@ export const TimelineAxis: FC<TimelineAxisProps> = (props) => {
 
   const cls = useStyles();
 
-  const totalTime = 40; // 10s
+  const refContainer = useRef<HTMLDivElement>(null);
+  const size = useSize(refContainer);
+  const totalWidth = size?.width ?? 0;
+
   const boldStep = 5; // 5s
   const lines: LineItem[] = useMemo(() => {
     const res: LineItem[] = [];
 
-    let curTime = 0;
-    while (curTime <= totalTime) {
+    let curSeconds = 0;
+    while (curSeconds * PIXEL_PER_SECOND <= totalWidth) {
       res.push({
-        time: curTime,
-        bold: curTime % boldStep === 0,
+        time: curSeconds,
+        bold: curSeconds % boldStep === 0,
       });
-      curTime++;
+      curSeconds++;
     }
 
     return res;
-  }, []);
+  }, [totalWidth]);
 
   return (
-    <div className={classNames(cls.wrap, className)}>
+    <div className={cx(cls.wrap, className)} ref={refContainer}>
       <div className={cls.linesWrap}>
         {lines.map((line) => {
           return (
             <div
               key={line.time}
-              className={classNames(cls.line, { [cls.bold]: line.bold })}
+              className={cx(cls.line, { [cls.bold]: line.bold })}
               data-time={line.bold ? formatSeconds(line.time) : void 0}
+              style={{ transform: `translateX(${line.time * PIXEL_PER_SECOND}px)` }}
             />
           );
         })}
@@ -55,29 +61,30 @@ function useStyles() {
   return useMemo(() => {
     return {
       wrap: css({
-        width: '98%',
-      }),
-      linesWrap: css({
-        width: '100%',
-        minWidth: '600px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        position: 'relative',
         cursor: 'pointer',
       }),
-      line: css({
-        height: '4px',
-        width: '1px',
-        background: 'var(--textDisabled)',
+      linesWrap: css({
         position: 'relative',
-        fontSize: '12px',
+        height: 16,
+      }),
+      line: css({
+        position: 'absolute',
+        left: 0,
+        zIndex: 1,
+        top: '50%',
+        width: 1,
+        height: 4,
+        marginTop: -2,
+        background: 'var(--textDisabled)',
+
+        ...transitions(['transform'], '0.1s ease'),
+
         '&::after': {
           content: 'attr(data-time)',
           position: 'absolute',
-          left: '4px',
-          top: '-9px',
-          fontSize: '20px',
+          left: 4,
+          top: -9,
+          fontSize: 20,
           transform: 'scale(0.5)',
           transformOrigin: 'left center',
           color: 'var(--textSupport)',
@@ -86,6 +93,7 @@ function useStyles() {
       bold: css({
         background: 'var(--textSupport)',
         height: '12px',
+        marginTop: -6,
       }),
     };
   }, []);
