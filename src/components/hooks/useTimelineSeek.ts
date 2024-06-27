@@ -13,7 +13,8 @@ export function useTimelineSeekAndDrag(refContainer: RefObject<HTMLElement>) {
     if (!container) return;
 
     const rect = container.getBoundingClientRect();
-    const actualXToLeftSideOfContainer = e.pageX - rect.x;
+    const scrollX = window.scrollX;
+    const actualXToLeftSideOfContainer = e.pageX - rect.x - scrollX;
 
     let newTime = actualXToLeftSideOfContainer / pixelPerSecond;
     newTime = Math.max(0, Math.min(totalDuration, newTime));
@@ -26,7 +27,8 @@ export function useTimelineSeekAndDrag(refContainer: RefObject<HTMLElement>) {
 
     setMoving(true);
     const rect = container.getBoundingClientRect();
-    const actualXToLeftSideOfContainer = e.pageX - rect.x;
+    const scrollX = window.scrollX;
+    const actualXToLeftSideOfContainer = e.pageX - rect.x - scrollX;
 
     let newTime = actualXToLeftSideOfContainer / pixelPerSecond;
     newTime = Math.max(0, Math.min(totalDuration, newTime));

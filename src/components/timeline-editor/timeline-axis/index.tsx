@@ -24,7 +24,7 @@ export const TimelineAxis: FC<TimelineAxisProps> = (props) => {
   const size = useSize(refContainer);
   const totalWidth = size?.width ?? 0;
 
-  const { onTimelineClick, moving } = useTimelineSeekAndDrag(refContainer);
+  const { onTimelineClick } = useTimelineSeekAndDrag(refContainer);
 
   const boldStep = 5; // 5s
   const lines: LineItem[] = useMemo(() => {
