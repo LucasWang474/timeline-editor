@@ -1,6 +1,4 @@
-import { FC, useMemo } from 'react';
-import { TimelineAxis } from './components/timeline-axis';
-import { TimelinePointer } from 'src/components/timeline-editor/components/timeline-pointer';
+import React, { FC, useMemo } from 'react';
 import { css, cx } from '@emotion/css';
 import {
   pixelPerSecond,
@@ -8,6 +6,8 @@ import {
   totalDuration,
 } from '@/components/timeline-editor/const';
 import { TimelineTimeContextProvider } from '@/components/timeline-editor/context/time';
+import { TimelinePointer } from '@/components/timeline-editor/components/timeline-pointer';
+import { TimelineAxis } from '@/components/timeline-editor/components/timeline-axis';
 
 interface TimelineEditorProps {
   className?: string;
