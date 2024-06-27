@@ -2,7 +2,11 @@ import { FC, useMemo } from 'react';
 import { TimelineAxis } from './timeline-axis';
 import { TimelinePointer } from '@/components/timeline-editor/time-pointer';
 import { css, cx } from '@emotion/css';
-import { TimelinePaddingLeft } from '@/components/timeline-editor/const';
+import {
+  pixelPerSecond,
+  TimelinePaddingLeft,
+  totalDuration,
+} from '@/components/timeline-editor/const';
 import { TimelineTimeContextProvider } from '@/components/context/time';
 
 interface TimelineEditorProps {
@@ -33,21 +37,20 @@ function useStyles() {
         position: 'relative',
 
         display: 'flex',
-        justifyContent: 'center',
         alignItems: 'center',
 
         background: '#fff',
         width: '100vw',
-        minWidth: '720px',
         height: '100vh',
         minHeight: '500px',
+        minWidth: totalDuration * pixelPerSecond + TimelinePaddingLeft,
+        padding: '0 48px',
       }),
       inner: css({
         overflow: 'hidden',
         position: 'relative',
 
         minHeight: '400px',
-        margin: '0 48px',
         padding: `6px 0 0 ${TimelinePaddingLeft}px`,
 
         flex: 1,

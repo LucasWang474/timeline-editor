@@ -1,7 +1,7 @@
 import { FC, useMemo, useRef } from 'react';
 import { formatSeconds } from '@/utils/time';
 import { css, cx } from '@emotion/css';
-import { pixelPerSecond } from '@/components/timeline-editor/const';
+import { pixelPerSecond, totalDuration } from '@/components/timeline-editor/const';
 import { transitions } from 'polished';
 import { useSize } from 'ahooks';
 import { useTimelineSeekAndDrag } from '@/components/hooks/useTimelineSeek';
@@ -51,7 +51,10 @@ export const TimelineAxis: FC<TimelineAxisProps> = (props) => {
               key={line.time}
               className={cx(cls.line, { [cls.bold]: line.bold })}
               data-time={line.bold ? formatSeconds(line.time) : void 0}
-              style={{ transform: `translateX(${line.time * pixelPerSecond}px)` }}
+              style={{
+                transform: `translateX(${line.time * pixelPerSecond}px)`,
+                opacity: line.time > totalDuration ? 0.3 : 1,
+              }}
             />
           );
         })}
