@@ -3,7 +3,7 @@ import { css, cx } from '@emotion/css';
 import { useTimelineElements2dController } from '@/components/timeline-editor/hooks/useTimelineTracks';
 import { TimelineTrackElement } from '@/components/timeline-editor/components/timeline-track-element';
 import { useElementDrag } from '@/components/timeline-editor/hooks/useElementDrag';
-import { pixelPerSecond, totalDuration } from '@/components/timeline-editor/const';
+import { totalDuration } from '@/components/timeline-editor/const';
 
 interface TimelineAreaProps {
   className?: string;
@@ -17,11 +17,12 @@ export const TimelineArea: FC<TimelineAreaProps> = (props) => {
 
   const { tracks } = useTimelineElements2dController();
   const { onMouseLeave, onMouseEnter, onMouseDown } = useElementDrag({
-    pixelPerSecond: pixelPerSecond,
     onTimeUpdate: ({ result }) => {
+      if (!result.length) return;
       onUpdatedElement(result[0]);
     },
     onTimeUpdated: ({ result }) => {
+      if (!result.length) return;
       onUpdatedElement(result[0]);
     },
     getDragLimit: () => {
