@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react';
 import { stopEvent } from '@/utils/event';
 import { css, cx } from '@emotion/css';
 import { pixelPerSecond, TimelinePaddingLeft } from '@/components/timeline-editor/const';
-import { useTimelineTimeContext } from '@/components/timeline-editor/hooks/useTimelineTimeContext';
+import { useTimelineTimeContext } from '@/components/timeline-editor/hooks/useTimelineTime';
 
 const HeadSVGWidth = 10;
 const LineWidth = 2;

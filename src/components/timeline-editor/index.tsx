@@ -9,6 +9,7 @@ import { TimelineTimeContextProvider } from '@/components/timeline-editor/contex
 import { TimelinePointer } from '@/components/timeline-editor/components/timeline-pointer';
 import { TimelineAxis } from '@/components/timeline-editor/components/timeline-axis';
 import { TimelineArea } from '@/components/timeline-editor/components/timeline-area';
+import { TimelineTracksContextProvider } from '@/components/timeline-editor/context/tracks';
 
 interface TimelineEditorProps {
   className?: string;
@@ -21,14 +22,16 @@ export const TimelineEditor: FC<TimelineEditorProps> = (props) => {
 
   return (
     <TimelineTimeContextProvider>
-      <div className={cx(cls.wrap, className)}>
-        <div className={cls.inner}>
-          <TimelineAxis className={cls.timelineAxis} />
-          <TimelinePointer />
+      <TimelineTracksContextProvider>
+        <div className={cx(cls.wrap, className)}>
+          <div className={cls.inner}>
+            <TimelineAxis className={cls.timelineAxis} />
+            <TimelinePointer />
 
-          <TimelineArea className={cls.timelineArea} />
+            <TimelineArea className={cls.timelineArea} />
+          </div>
         </div>
-      </div>
+      </TimelineTracksContextProvider>
     </TimelineTimeContextProvider>
   );
 };
@@ -74,7 +77,6 @@ function useStyles() {
 
       timelineArea: css({
         flex: 1,
-        background: 'skyblue',
       }),
     };
   }, []);

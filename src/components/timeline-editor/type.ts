@@ -1,12 +1,21 @@
-export type TrackElement<T extends Record<string, never> = Record<string, never>> = {
+export type BaseTrackElement = {
   id: string;
   start: number;
   duration: number;
-
-  type: 'color';
-  meta?: T;
 };
 
+export type ColorTrackElement = BaseTrackElement & {
+  type: 'color';
+  color: string;
+};
+
+export type TrackElement = ColorTrackElement;
+
 export type TimelineAreaData = {
-  elements2d: TrackElement[][];
+  tracks: TimelineTrack[];
+};
+
+export type TimelineTrack = {
+  id: string;
+  elements: TrackElement[];
 };
