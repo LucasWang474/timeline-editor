@@ -1,10 +1,11 @@
 import type { FC } from 'react';
 import { css, cx } from '@emotion/css';
 import { useTimelineElements2dController } from '@/components/timeline-editor/hooks/useTimelineTracks';
-import { pixelPerSecond } from '@/components/timeline-editor/const';
+import { TimelineTrackElement } from '@/components/timeline-editor/components/timeline-track-element';
+import { useElementDrag } from '@/components/timeline-editor/hooks/useElementDrag';
+import { pixelPerSecond, totalDuration } from '@/components/timeline-editor/const';
 
 interface TimelineAreaProps {
-  children?: React.ReactNode;
   className?: string;
 }
 
@@ -12,7 +13,26 @@ export const TimelineArea: FC<TimelineAreaProps> = (props) => {
   const { className } = props;
   const cls = useStyles();
 
+  const { onUpdatedElement } = useTimelineElements2dController();
+
   const { tracks } = useTimelineElements2dController();
+  const { onMouseLeave, onMouseEnter, onMouseDown } = useElementDrag({
+    pixelPerSecond: pixelPerSecond,
+    onTimeUpdate: ({ result }) => {
+      onUpdatedElement(result[0]);
+    },
+    onTimeUpdated: ({ result }) => {
+      onUpdatedElement(result[0]);
+    },
+    getDragLimit: () => {
+      return {
+        limitStart: 0,
+        limitEnd: totalDuration,
+        minDuration: 1,
+        maxDuration: totalDuration,
+      };
+    },
+  });
 
   return (
     <div className={cx(cls.wrap, className)}>
@@ -22,13 +42,12 @@ export const TimelineArea: FC<TimelineAreaProps> = (props) => {
           <div key={id}>
             {elements.map((element) => {
               return (
-                <div
+                <TimelineTrackElement
                   key={element.id}
-                  style={{
-                    background: element.color,
-                    width: element.duration * pixelPerSecond,
-                    height: 20,
-                  }}
+                  data={element}
+                  onMouseDown={onMouseDown}
+                  onMouseEnter={onMouseEnter}
+                  onMouseLeave={onMouseLeave}
                 />
               );
             })}
@@ -41,6 +60,8 @@ export const TimelineArea: FC<TimelineAreaProps> = (props) => {
 
 function useStyles() {
   return {
-    wrap: css({}),
+    wrap: css({
+      position: 'relative',
+    }),
   };
 }

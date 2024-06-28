@@ -3,7 +3,7 @@ import { TimelineTrack } from '@/components/timeline-editor/type';
 
 interface TimelineTracksContextProps {
   tracks: TimelineTrack[];
-  setTracks: (tracks: TimelineTrack[]) => void;
+  setTracks: React.Dispatch<React.SetStateAction<TimelineTrack[]>>;
 }
 
 export const TimelineTracksContext = createContext<TimelineTracksContextProps>({
@@ -21,7 +21,7 @@ export const TimelineTracksContextProvider: FC<{ children: ReactNode }> = (props
         {
           id: 'ele1',
           color: 'pink',
-          start: 0,
+          start: 5,
           duration: 10,
           type: 'color',
         },
