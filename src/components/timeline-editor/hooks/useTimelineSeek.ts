@@ -1,7 +1,7 @@
 import { RefObject, useState } from 'react';
 import { useMemoizedFn } from 'ahooks';
 import { pixelPerSecond, totalDuration } from '@/components/timeline-editor/const';
-import { useTimelineTimeContext } from '@/components/timeline-editor/hooks/useTimelineTimeContext';
+import { useTimelineTimeContext } from '@/components/timeline-editor/hooks/useTimelineTime';
 
 export function useTimelineSeekAndDrag(refContainer: RefObject<HTMLElement>) {
   const { setTime } = useTimelineTimeContext();
